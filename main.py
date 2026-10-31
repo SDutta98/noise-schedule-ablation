@@ -177,9 +177,16 @@ def check_prerequisites(stage_names):
             "https://bupt-ai-cz.github.io/LLVIP/ and unpack it to LLVIP/"
         )
     needs_data = {"train-a", "train-b", "run0", "final-a", "final-b", "eval"}
-    if needs_data & set(stage_names) and not (ROOT / "data" / "train.txt").exists():
-        if "data" not in stage_names:
-            problems.append("data/train.txt not found - run the 'data' stage first")
+    if needs_data & set(stage_names):
+        if not (ROOT / "data" / "train.txt").exists():
+            if "data" not in stage_names:
+                problems.append("data/train.txt not found - run the 'data' stage first")
+        if not (ROOT / "data" / "cache").exists():
+            problems.append(
+                "data/cache not found - run: python scripts\\prepare_llvip.py "
+                "--llvip LLVIP --out data --resolution 512 --train-size 2000 "
+                "--val-size 60 --test-size 100"
+            )
     return problems
 
 

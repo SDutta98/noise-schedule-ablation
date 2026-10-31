@@ -42,7 +42,9 @@ class LLVIPPairs(Dataset):
                 missing.append(rel)
         if missing:
             raise FileNotFoundError(
-                f"cache missing for {missing[:3]} - run prepare_llvip.py first"
+                f"cache missing for {missing[:3]} - run prepare_llvip.py first. "
+                "Example: python scripts\\prepare_llvip.py --llvip LLVIP --out data "
+                "--resolution 512 --train-size 2000 --val-size 60 --test-size 100"
             )
 
         self.input_ids = tokenizer(
